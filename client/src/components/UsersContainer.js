@@ -5,7 +5,7 @@ import axios from 'axios';
 class UsersContainer extends Component {
 
   constructor(props) {
-  super(props)
+  super(props);
   this.state = {
     users: []
   }
