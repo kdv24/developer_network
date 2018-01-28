@@ -1,0 +1,36 @@
+.App {
+  padding: 40px;
+}
+
+.App-title {
+  color: #8E2350;
+}
+
+.App-header {
+  height: 150px;
+  /* padding: 20px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.App-intro {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.userlist {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border: 2px solid #8E2350;
+  padding: 20px;
+}
+
+.user {
+  border: 1px dotted gray;
+  padding-left: 10px;
+}
