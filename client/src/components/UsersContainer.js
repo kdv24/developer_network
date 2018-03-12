@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import '../App.css';
 import axios from 'axios';
+import update from 'immutability-helper';
 import User from './User.js';
 
 class UsersContainer extends Component {
@@ -13,25 +14,28 @@ class UsersContainer extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3001/api/v1/users.json')
+    axios.get('http://localhost:3002/api/v1/users')
       .then(response => {
         this.setState({users: response.data});
-        console.log(response.data);
       })
       .catch(error => console.log(error))
   }
 
   addNewUser() {
-    axios.post('http://localhost:3001/api/v1/users',
+    axios.post('http://localhost:3002/api/v1/users',
       { user:
           {
-            name: '',
-            email: ''
+            name: 'hi',
+            email: 'bye'
           }
       }
     )
       .then(response => {
         console.log(response.data)
+        const users = update(this.state.users, {
+          $splice: [[0, 0, response.data]]
+        })
+        this.setState({users: users})
       })
       .catch(error => console.log(error))
   };

@@ -30,11 +30,11 @@ module DeveloperNetwork
 
     config.api = true
 
-    config.middleware.insert_before 0, Rack::Cors, :debug => true, :logger => (-> { Rails.logger })  do
-      allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :options]
-      end
-    end
+    # config.middleware.insert_before 0, Rack::Cors, :debug => true, :logger => (-> { Rails.logger })  do
+    #   allow do
+    #     origins '*'
+    #     resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :options]
+    #   end
+    # end
   end
 end
