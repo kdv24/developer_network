@@ -6,15 +6,17 @@ import User from './User.js';
 
 class UsersContainer extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor(props, state) {
+    super(props, state);
     this.state = {
       users: []
     }
+
+    this.addNewUser = this.addNewUser.bind(this);
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3002/api/v1/users')
+    axios.get('http://localhost:3001/api/v1/users')
       .then(response => {
         this.setState({users: response.data});
       })
@@ -22,20 +24,20 @@ class UsersContainer extends Component {
   }
 
   addNewUser() {
-    axios.post('http://localhost:3002/api/v1/users',
+    axios.post('http://localhost:3001/api/v1/users',
       { user:
           {
-            name: 'hi',
-            email: 'bye'
+            name: '',
+            email: ''
           }
       }
     )
       .then(response => {
-        console.log(response.data)
         const users = update(this.state.users, {
           $splice: [[0, 0, response.data]]
         })
         this.setState({users: users})
+
       })
       .catch(error => console.log(error))
   };
