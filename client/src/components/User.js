@@ -6,7 +6,7 @@ const User = ({user}) =>
       <div className="user" key={user.id}>
         <h4>{user.name}</h4>
         <h5>{user.email}</h5>
-      </div>
+      </div>;
 
 export default User
 
