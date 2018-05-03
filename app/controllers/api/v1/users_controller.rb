@@ -2,17 +2,23 @@ module Api::V1
   class UsersController < ApplicationController
 
     def index
-      @users = User.order("created_at DESC")
+      @users = User.all.order("created_at DESC")
       render json: @users
     end
 
     def show
-      @users = User.all
-      render json: @users
+      @user = User.find(params[:id])
+      render json: @user
     end
 
     def create
       @user = User.create(user_params)
+      render json: @user
+    end
+
+    def update
+      @user = User.find(params[:id])
+      @user.update(user_params)
       render json: @user
     end
 
