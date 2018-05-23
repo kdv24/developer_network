@@ -11,11 +11,12 @@ class UsersContainer extends Component {
     super(props, state);
     this.state = {
       users: [],
-      editingUserId: null
+      editingUserId: null,
+      notification: ''
     }
 
-    this.addNewUser = this.addNewUser.bind(this);
-    this.updateUser = this.updateUser.bind(this);
+    this.addNewUser   = this.addNewUser.bind(this);
+    this.updateUser   = this.updateUser.bind(this);
   }
 
   componentDidMount() {
@@ -54,7 +55,11 @@ class UsersContainer extends Component {
     const users = update(this.state.users, {
       [userIndex]: { $set: user }
     })
-    this.setState({users: users})
+    this.setState({users: users, notification: 'All changes saved'})
+  }
+
+  resetNotification = () => {
+    this.setState({ notification: ''})
   }
 
   render() {
@@ -66,12 +71,14 @@ class UsersContainer extends Component {
           onClick={this.addNewUser}
         >Add New User
         </button>
+        <span className="notification">{this.state.notification}</span>
         {this.state.users.map((user) => {
           if(this.state.editingUserId === user.id) {
             return(
               <UserForm user={user}
-                             key={user.id}
-                             updateUser={this.updateUser}
+                        key={user.id}
+                        updateUser={this.updateUser}
+                        resetNotification={this.resetNotification}
               />
             )
           } else {

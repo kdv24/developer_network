@@ -15,7 +15,9 @@ class UserForm extends Component {
   render() {
     return (
       <div className="user">
-        <form className="form" onBlur={this.handleBlur} >
+        <form className="form"
+              onBlur={this.handleBlur}
+        >
           <input
             className="input"
             type="text"
@@ -36,12 +38,14 @@ class UserForm extends Component {
     )
   }
 
+
   handleInput(e) {
+    this.props.resetNotification()
     this.setState({[e.target.name]: e.target.value})
   }
 
-  handleBlur() {
-    let user = {
+  handleBlur = () => {
+    const user = {
       name: this.state.name,
       email: this.state.email
     }
