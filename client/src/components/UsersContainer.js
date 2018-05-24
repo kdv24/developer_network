@@ -17,6 +17,7 @@ class UsersContainer extends Component {
 
     this.addNewUser   = this.addNewUser.bind(this);
     this.updateUser   = this.updateUser.bind(this);
+    this.enableEditing = this.enableEditing.bind(this);
   }
 
   componentDidMount() {
@@ -27,6 +28,33 @@ class UsersContainer extends Component {
       .catch(error => console.log(error))
   }
 
+  render() {
+    return (
+      <div>
+        <h3 style={{textAlign: 'center'}}>Users</h3>
+        <button
+          className="button"
+          onClick={this.addNewUser}
+        >Add New User
+        </button>
+        <span className="notification">{this.state.notification}</span>
+        {this.state.users.map((user) => {
+          if(this.state.editingUserId === user.id) {
+            return(
+              <UserForm user={user}
+                        key={user.id}
+                        updateUser={this.updateUser}
+                        nameRef={ input => this.name = input }
+                        resetNotification={this.resetNotification}
+              />
+            )
+          } else {
+            return (<User user={user} key={user.id} onClick={this.enableEditing} />)
+          }
+        })}
+      </div>
+    )
+  }
 
   addNewUser() {
     axios.post('http://localhost:3001/api/v1/users',
@@ -62,31 +90,9 @@ class UsersContainer extends Component {
     this.setState({ notification: ''})
   }
 
-  render() {
-    return (
-      <div>
-        <h3 style={{textAlign: 'center'}}>Users</h3>
-        <button
-          className="button"
-          onClick={this.addNewUser}
-        >Add New User
-        </button>
-        <span className="notification">{this.state.notification}</span>
-        {this.state.users.map((user) => {
-          if(this.state.editingUserId === user.id) {
-            return(
-              <UserForm user={user}
-                        key={user.id}
-                        updateUser={this.updateUser}
-                        resetNotification={this.resetNotification}
-              />
-            )
-          } else {
-            return (<User user={user} key={user.id} />)
-          }
-        })}
-      </div>
-    )
+  enableEditing(id) {
+    this.setState({editingUserId: id},
+      () => this.name.focus() )
   }
 }
 

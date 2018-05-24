@@ -6,7 +6,7 @@ class UserForm extends Component {
     super(props);
     this.state = {
       name: this.props.user.name,
-      email: this.props.user.email
+      email: this.props.user.email,
     };
     this.handleInput = this.handleInput.bind(this);
     this.handleBlur  = this.handleBlur.bind(this);
@@ -25,6 +25,7 @@ class UserForm extends Component {
             placeholder="Enter a name"
             value={this.state.name}
             onChange={this.handleInput}
+            ref={this.props.nameRef}
           />
           <textarea className="input"
                     name="email"
