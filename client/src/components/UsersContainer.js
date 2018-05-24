@@ -49,7 +49,7 @@ class UsersContainer extends Component {
               />
             )
           } else {
-            return (<User user={user} key={user.id} onClick={this.enableEditing} />)
+            return (<User user={user} key={user.id} onClick={this.enableEditing} onDelete={this.deleteUser} />)
           }
         })}
       </div>
@@ -91,9 +91,20 @@ class UsersContainer extends Component {
   }
 
   enableEditing(id) {
-    this.setState({editingUserId: id},
+    this.setState({ editingUserId: id},
       () => this.name.focus() )
   }
+
+  deleteUser = (id) => {
+    axios.delete(`http://localhost:3001/api/v1/users/${id}`)
+      .then(response => {
+        const userIndex = this.state.users.findIndex( x => x.id === id)
+        const users = update(this.state.users, { $splice: [[userIndex, 1]]})
+        this.setState({users: users})
+      })
+      .catch(error => console.log(error))
+  }
+
 }
 
 export default UsersContainer
